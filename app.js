@@ -331,18 +331,95 @@ console.log("results of vegetarianDishes", vegetarianDishes)
 
 //8b. Use the filter method to eliminate duplicate from problem 8a.
 
+function problemEightB(array){
+    let results = array.filter(function(element, index, array){
+        if(array.indexOf(element) === index){
+            return true
+        }
+        else{
+            return false
+        }
+    })
+    return results;
+}
 
+let cuisineTypes = problemEightB(cuisineList);
+console.log("results of cuisineTypes", cuisineTypes)
 
 //11. Create a function that will return dishes whose ingredients array INCLUDES "tomato" OR "cheese".
 //Hint: You do not want to check the array's indexes to find out what the array INCLUDES.
 //Filter
 
+function problemEleven(){
+    let results = dishes.filter(function(element){
+        if(element.ingredients.includes("tomato") || element.ingredients.includes("cheese")){
+            return true;
+        }
+        else{
+            return false;
+        }
+    })
+    return results;
+}
 
+let cheeseOrTomatoDishes = problemEleven();
+console.log("results of cheeseOrTomatoDishes", cheeseOrTomatoDishes)
 
 //12. Create a function that will return the total serving count of all dishes.
 //Must use Reduce, not a loop.
 
+function problemTwelve(){
+    let servings = dishes.map(function(element){
+        return element.servings
+    })
+    let totalServings = servings.reduce(function(total, element){
+        return total + element;
+    })
+    return totalServings;
+}
 
+let totalServings = problemTwelve();
+console.log(`Every one of these dishes would serve ${totalServings}`)
 
 //13. Create a function that will return an array of any objects that do not share a cuisine type with any other objects.
 
+function problemThirteen(){
+    let cuisineList = dishes.map(function(element){
+        return element.cuisine;
+    })
+    let cuisineTypes = cuisineList.filter(function(element, index, array){
+        if(array.indexOf(element) === index){
+            return true
+        }
+        else{
+            return false
+        }
+    })
+    let uniqueCuisines = [];
+    for(type of cuisineTypes){
+        let occurances = 0;
+        for(dish of dishes){
+            if(dish.cuisine == type){
+                occurances++;
+            }
+            if(occurances > 1){
+                break;
+            }
+        }
+        if(occurances < 2){
+            uniqueCuisines.push(type)
+        }
+    }
+    let uniqueCuisineDishes = dishes.filter(function(element){
+        if(uniqueCuisines.some(item => element.cuisine.includes(item))){
+            return true;
+        }
+        else {
+            return false;
+        }
+    });
+    return uniqueCuisineDishes;
+}
+
+let uniqueCuisines = problemThirteen();
+console.log("result of uniqueCuisines", uniqueCuisines)
